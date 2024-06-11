@@ -1,6 +1,10 @@
-print("this is my db file")
+from app import app, db
+from flask import request, jsonify
+from models import Friend
 
-db = 10
-
-if __name__ == "__main__":
-    print("This file is called directly")
+# Get all friends
+@app.route("/api/friends",methods=["GET"])
+def get_friends():
+    friends = Friend.query.all()
+    result = [friend.to_json() for friend in friends]
+    return jsonify(result)
